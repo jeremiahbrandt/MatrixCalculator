@@ -4,6 +4,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,7 @@ public class MatrixGrid extends GridPane {
     private static int height = 300;
     private static int inputWidth = 50;
     private static int inputHeight = 50;
+    private static Font inputFont = new Font(30);
 
     private int numRows;
     private int numCols;
@@ -35,10 +37,22 @@ public class MatrixGrid extends GridPane {
             for(int col=0; col<numCols; col++) {
                 TextField input = new InputField(row, col);
                 input.setPrefSize(inputWidth, inputHeight);
+                input.setAlignment(Pos.CENTER);
+                input.setFont(inputFont);
                 super.add(input, inputWidth*row, inputHeight*col);
             }
         }
 
+    }
+
+    public void enableEdit() {
+        for(Node input: super.getChildren()) {
+            if(input instanceof InputField) {
+                TextField textField = (TextField) input;
+                textField.setText("");
+                textField.setEditable(false);
+            }
+        }
     }
 
     public void disableEdits() {
@@ -85,14 +99,6 @@ public class MatrixGrid extends GridPane {
                 int row = inputField.row;
                 int col = inputField.col;
                 inputField.setText(String.valueOf(values[row][col]));
-            }
-        }
-    }
-
-    public void clear() {
-        for(Node input: super.getChildren()) {
-            if(input instanceof TextField) {
-                ((TextField) input).setText("");
             }
         }
     }

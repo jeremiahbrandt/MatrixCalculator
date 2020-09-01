@@ -44,8 +44,8 @@ public class Calculator extends BorderPane {
             }
         }
 
-        input1.clear();
-        input2.clear();
+        input1.disableEdits();
+        input2.disableEdits();
         output.setValues(answer);
     }
 }
