@@ -45,12 +45,12 @@ public class MatrixGrid extends GridPane {
 
     }
 
-    public void enableEdit() {
+    public void enableEdits() {
         for(Node input: super.getChildren()) {
             if(input instanceof InputField) {
                 TextField textField = (TextField) input;
                 textField.setText("");
-                textField.setEditable(false);
+                textField.setEditable(true);
             }
         }
     }

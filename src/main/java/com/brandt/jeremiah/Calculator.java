@@ -2,7 +2,7 @@ package com.brandt.jeremiah;
 
 import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.control.Button;
+import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 
 public class Calculator extends BorderPane {
@@ -26,21 +26,28 @@ public class Calculator extends BorderPane {
 
         MatrixGrid.resizeInputs();
 
-        Button calculateButton = new Button("Calculate");
-        calculateButton.setOnMouseClicked(mouseEvent -> calculate());
-        calculateButton.setPrefSize(200, 120);
-        BorderPane.setAlignment(calculateButton, Pos.CENTER);
-        super.setBottom(calculateButton);
+
+        Group buttons = new Buttons(this);
+        BorderPane.setAlignment(buttons, Pos.CENTER);
+        super.setBottom(buttons);
     }
 
-    private void calculate() {
+    protected void calculate(CalculationType calculationType) {
         int[][] input1Values = input1.getValues();
         int[][] input2Values = input2.getValues();
         int[][] answer = new int[input1Values.length][input1Values[0].length];
 
-        for(int i=0; i<input1Values.length; i++) {
-            for(int j=0; j<input1Values[i].length; j++) {
-                answer[i][j] = input1Values[i][j] + input2Values[i][j];
+        if(calculationType.equals(CalculationType.ADDITION)) {
+            for(int i=0; i<input1Values.length; i++) {
+                for(int j=0; j<input1Values[i].length; j++) {
+                    answer[i][j] = input1Values[i][j] + input2Values[i][j];
+                }
+            }
+        } else if(calculationType.equals(CalculationType.SUBSTRACTION)) {
+            for(int i=0; i<input1Values.length; i++) {
+                for(int j=0; j<input1Values[i].length; j++) {
+                    answer[i][j] = input1Values[i][j] - input2Values[i][j];
+                }
             }
         }
 
@@ -48,4 +55,14 @@ public class Calculator extends BorderPane {
         input2.disableEdits();
         output.setValues(answer);
     }
+
+    protected void clearAllFields() {
+        for(Node node: super.getChildren()) {
+            if(node instanceof MatrixGrid) {
+                MatrixGrid matrixGrid = (MatrixGrid) node;
+                matrixGrid.enableEdits();
+            }
+        }
+    }
+
 }
