@@ -49,6 +49,10 @@ public class Calculator extends BorderPane {
                     answer[i][j] = input1Values[i][j] - input2Values[i][j];
                 }
             }
+        } else if(calculationType.equals(CalculationType.MULTIPLICATION)) {
+            // TODO: Multiply
+        } else if(calculationType.equals(CalculationType.DIVISION)) {
+            // TODO: Divide
         }
 
         input1.disableEdits();
