@@ -10,12 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MatrixGrid extends GridPane {
-    private static List<MatrixGrid> matrices = new ArrayList<MatrixGrid>();
+    private static List<MatrixGrid> matrices = new ArrayList<>();
     private static int width = 300;
     private static int height = 300;
     private static int inputWidth = 50;
     private static int inputHeight = 50;
-    private static Font inputFont = new Font(30);
+    private static Font inputFont = new Font(15);
 
     private int numRows;
     private int numCols;
@@ -81,7 +81,7 @@ public class MatrixGrid extends GridPane {
                 int row = ((InputField) input).row;
                 int col = ((InputField) input).col;
                 try {
-                    values[row][col] = Integer.valueOf(((InputField) input).getText());
+                    values[row][col] = Integer.parseInt(((InputField) input).getText());
                 } catch (NumberFormatException e) {
 //                    TODO: Throw custom exception
                     values[row][col] = 0;
@@ -122,10 +122,7 @@ public class MatrixGrid extends GridPane {
         inputWidth = width/numRows;
         inputHeight = height/numCols;
 
-        if(inputWidth > inputHeight) {
-            inputWidth = inputHeight;
-        } else {
-            inputHeight = inputWidth;
-        }
+        if(inputWidth > inputHeight) inputWidth = inputHeight;
+        else inputHeight = inputWidth;
     }
 }
