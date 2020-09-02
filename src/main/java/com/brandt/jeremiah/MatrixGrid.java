@@ -93,6 +93,21 @@ public class MatrixGrid extends GridPane {
     }
 
     public void setValues(int[][] values) {
+        super.getChildren().clear();
+
+        numRows = values.length;
+        numCols = values[0].length;
+
+        for(int row=0; row<numRows; row++) {
+            for(int col=0; col<numCols; col++) {
+                TextField input = new InputField(row, col);
+                input.setPrefSize(inputWidth, inputHeight);
+                input.setAlignment(Pos.CENTER);
+                input.setFont(inputFont);
+                super.add(input, inputHeight*col, inputWidth*row);
+            }
+        }
+
         for(Node input: super.getChildren()) {
             if(input instanceof InputField) {
                 InputField inputField = (InputField) input;
