@@ -36,7 +36,26 @@ public class Matrix extends VBox {
         int newRowCount = rowSelector.getCount();
         int newColCount = colSelector.getCount();
 
-        grid.setValues(new int[newRowCount][newColCount]);
+        int[][] originalValues = grid.getValues();
+        int originalRowCount = originalValues.length;
+        int originalColCount = originalValues[0].length;
+
+        int[][] copyOfOrginalValues = new int[newRowCount][newColCount];
+        for(int i=0; i<copyOfOrginalValues.length; i++) {
+            if(i >= originalRowCount) {
+                break;
+            }
+
+            for(int j=0; j<copyOfOrginalValues[0].length; j++) {
+                if(j >= originalColCount) {
+                   break;
+                }
+
+                copyOfOrginalValues[i][j] = originalValues[i][j];
+            }
+        }
+
+        grid.setValues(copyOfOrginalValues);
         Grid.resizeInputs();
     }
 
