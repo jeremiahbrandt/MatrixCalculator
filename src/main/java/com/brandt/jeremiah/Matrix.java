@@ -4,6 +4,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.Labeled;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
@@ -12,11 +13,19 @@ public class Matrix extends VBox {
 
     public Matrix(String identifier) {
         super.setAlignment(Pos.CENTER);
+        super.setSpacing(30);
 
         Labeled title = new Label("Matrix " + identifier.toUpperCase());
         title.setFont(titleFont);
+
+        HBox dimensionSelectors = new HBox();
+        dimensionSelectors.setSpacing(15);
+        DimensionSelector rowSelector = new DimensionSelector("Rows");
+        DimensionSelector colSelector = new DimensionSelector("Columns");
+        dimensionSelectors.getChildren().addAll(rowSelector, colSelector);
+
         Grid grid = new Grid();
-        super.getChildren().addAll(title, grid);
+        super.getChildren().addAll(title, dimensionSelectors, grid);
     }
 
     public Grid getGrid() {

@@ -24,7 +24,7 @@ public class Grid extends GridPane {
 
     public Grid(int rows, int cols) {
         matrices.add(this);
-        super.setAlignment(Pos.CENTER);
+        super.setAlignment(Pos.TOP_CENTER);
         super.setPrefSize(300, 300);
 
         numRows = rows;
