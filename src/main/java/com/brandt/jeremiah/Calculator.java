@@ -6,25 +6,25 @@ import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 
 public class Calculator extends HBox {
-    private Grid input1;
+    private Matrix input1;
     private OperationSelector operationSelector;
-    private Grid input2;
-    private Grid output;
+    private Matrix input2;
+    private Matrix output;
 
     public Calculator() {
         super.setSpacing(20);
 
-        input1 = new Grid();
+        input1 = new Matrix("A");
 
         operationSelector = new OperationSelector();
         super.setAlignment(Pos.CENTER);
 
-        input2 = new Grid();
+        input2 = new Matrix("B");
 
         CalculationButton calculationButton = new CalculationButton(this);
 
-        output = new Grid();
-        output.disableEdits();
+        output = new Matrix("C");
+        output.getGrid().disableEdits();
 
 
         super.getChildren().addAll(input1, operationSelector, input2, calculationButton, output);
@@ -43,8 +43,8 @@ public class Calculator extends HBox {
             System.out.println("Defaulting operation to " + operation + "!");
         }
 
-        int[][] input1Values = input1.getValues();
-        int[][] input2Values = input2.getValues();
+        int[][] input1Values = input1.getGrid().getValues();
+        int[][] input2Values = input2.getGrid().getValues();
         int[][] answer = new int[0][0];
 
         if(operation.equals(Operation.ADDITION)) {
@@ -79,9 +79,9 @@ public class Calculator extends HBox {
             answer = new int[input1Values.length][input2Values[0].length];
         }
 
-        input1.disableEdits();
-        input2.disableEdits();
-        output.setValues(answer);
+        input1.getGrid().disableEdits();
+        input2.getGrid().disableEdits();
+        output.getGrid().setValues(answer);
         Grid.resizeInputs();
     }
 
@@ -101,8 +101,8 @@ public class Calculator extends HBox {
         int[][] input1TestValues = new int[][]{{1, 6, 11}, {2, 7, 12}, {3, 8, 13}, {4, 9, 14}, {5, 10, 15}};
         int[][] input2TestValues = new int[][]{{1, 4, 7, 10, 13, 16, 19}, {2, 5, 8, 11, 14, 17, 20}, {3, 6, 9, 12, 15, 18, 21}};
 
-        input1.setValues(input1TestValues);
-        input2.setValues(input2TestValues);
+        input1.getGrid().setValues(input1TestValues);
+        input2.getGrid().setValues(input2TestValues);
     }
 
 }
