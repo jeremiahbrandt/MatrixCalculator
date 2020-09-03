@@ -1,6 +1,6 @@
 package com.brandt.jeremiah;
 
-public enum CalculationType {
+public enum Operation {
     ADDITION,
     SUBSTRACTION,
     MULTIPLICATION,

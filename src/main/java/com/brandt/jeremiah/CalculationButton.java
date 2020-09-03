@@ -9,8 +9,6 @@ public class CalculationButton extends Button {
     public CalculationButton(Calculator calculator) {
         super.setText("=");
         super.setMinSize(WIDTH, HEIGHT);
-        super.setOnMouseClicked(mouseEvent -> {
-            calculator.calculate(Operation.ADDITION);
-        });
+        super.setOnMouseClicked(mouseEvent -> calculator.calculate());
     }
 }

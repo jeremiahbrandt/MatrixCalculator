@@ -9,8 +9,8 @@ import javafx.scene.text.Font;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MatrixGrid extends GridPane {
-    private static List<MatrixGrid> matrices = new ArrayList<>();
+public class Grid extends GridPane {
+    private static List<Grid> matrices = new ArrayList<>();
     private static int width = 300;
     private static int height = 300;
     private static int inputWidth = 50;
@@ -20,14 +20,14 @@ public class MatrixGrid extends GridPane {
     private int numRows;
     private int numCols;
 
-    public MatrixGrid() {
+    public Grid() {
         this(2, 2);
     }
 
-    public MatrixGrid(int rows, int cols) {
+    public Grid(int rows, int cols) {
         matrices.add(this);
         super.setAlignment(Pos.CENTER);
-        super.setPrefSize(400, 400);
+        super.setPrefSize(250, 250);
 
         numRows = rows;
         numCols = cols;
@@ -64,7 +64,7 @@ public class MatrixGrid extends GridPane {
     }
 
     public static void resizeInputs() {
-        for(MatrixGrid matrix: matrices) {
+        for(Grid matrix: matrices) {
             for(Node input: matrix.getChildren()) {
                 if(input instanceof TextField) {
                     ((TextField) input).setPrefSize(inputWidth, inputHeight);

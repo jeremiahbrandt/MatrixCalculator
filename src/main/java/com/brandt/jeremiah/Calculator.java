@@ -1,21 +1,22 @@
 package com.brandt.jeremiah;
 
+import com.brandt.jeremiah.Exceptions.UnknownOperationException;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
 
 public class Calculator extends HBox {
-    private static int PADDING = 20;
-
     private Grid input1;
+    private OperationSelector operationSelector;
     private Grid input2;
     private Grid output;
 
     public Calculator() {
+        super.setSpacing(30);
+
         input1 = new Grid();
 
-        ComboBox operationSelector = new OperationSelector();
+        operationSelector = new OperationSelector();
         super.setAlignment(Pos.CENTER);
 
         input2 = new Grid();
@@ -32,7 +33,16 @@ public class Calculator extends HBox {
 //        insertTestValues();
     }
 
-    protected void calculate(Operation operation) {
+    protected void calculate() {
+        Operation operation;
+        try {
+            operation = operationSelector.getSelectedOperation();
+        } catch (UnknownOperationException e) {
+            operation = Operation.ADDITION;
+            System.out.println("Unable to perform operation \"" + e.getOperationString() + "\"");
+            System.out.println("Defaulting operation to " + operation + "!");
+        }
+
         int[][] input1Values = input1.getValues();
         int[][] input2Values = input2.getValues();
         int[][] answer = new int[0][0];
