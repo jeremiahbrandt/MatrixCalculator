@@ -29,7 +29,7 @@ public class Calculator extends HBox {
 
         super.getChildren().addAll(input1, operationSelector, input2, calculationButton, output);
 
-        insertTestValues();
+//        insertTestValues();
         Grid.resizeInputs();
     }
 
@@ -94,7 +94,7 @@ public class Calculator extends HBox {
         }
     }
 
-    // TOOD: Remove test method
+    // Test
     private void insertTestValues() {
 //        int[][] input1TestValues = new int[][]{{1, 2, 3}, {4, 5, 6}};
 //        int[][] input2TestValues = new int[][]{{1, 2}, {3, 4}, {5, 6}};

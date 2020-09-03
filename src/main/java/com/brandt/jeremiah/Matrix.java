@@ -11,6 +11,10 @@ import javafx.scene.text.Font;
 public class Matrix extends VBox {
     private static Font titleFont = new Font(30);
 
+    private DimensionSelector rowSelector;
+    private DimensionSelector colSelector;
+    private Grid grid;
+
     public Matrix(String identifier) {
         super.setAlignment(Pos.CENTER);
         super.setSpacing(30);
@@ -20,12 +24,20 @@ public class Matrix extends VBox {
 
         HBox dimensionSelectors = new HBox();
         dimensionSelectors.setSpacing(15);
-        DimensionSelector rowSelector = new DimensionSelector("Rows");
-        DimensionSelector colSelector = new DimensionSelector("Columns");
+        rowSelector = new DimensionSelector("Rows",this);
+        colSelector = new DimensionSelector("Columns", this);
         dimensionSelectors.getChildren().addAll(rowSelector, colSelector);
 
-        Grid grid = new Grid();
+        grid = new Grid();
         super.getChildren().addAll(title, dimensionSelectors, grid);
+    }
+
+    protected void resize() {
+        int newRowCount = rowSelector.getCount();
+        int newColCount = colSelector.getCount();
+
+        grid.setValues(new int[newRowCount][newColCount]);
+        Grid.resizeInputs();
     }
 
     public Grid getGrid() {
