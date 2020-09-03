@@ -12,7 +12,7 @@ public class Calculator extends HBox {
     private Grid output;
 
     public Calculator() {
-        super.setSpacing(30);
+        super.setSpacing(20);
 
         input1 = new Grid();
 
@@ -26,11 +26,11 @@ public class Calculator extends HBox {
         output = new Grid();
         output.disableEdits();
 
-        Grid.resizeInputs();
 
         super.getChildren().addAll(input1, operationSelector, input2, calculationButton, output);
 
-//        insertTestValues();
+        insertTestValues();
+        Grid.resizeInputs();
     }
 
     protected void calculate() {
@@ -82,6 +82,7 @@ public class Calculator extends HBox {
         input1.disableEdits();
         input2.disableEdits();
         output.setValues(answer);
+        Grid.resizeInputs();
     }
 
     protected void clearAllFields() {

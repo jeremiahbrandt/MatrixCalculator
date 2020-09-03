@@ -11,10 +11,8 @@ import java.util.List;
 
 public class Grid extends GridPane {
     private static List<Grid> matrices = new ArrayList<>();
-    private static int width = 300;
-    private static int height = 300;
-    private static int inputWidth = 50;
-    private static int inputHeight = 50;
+    private static int smallestCountRowsOrColumns = 999;
+    private static int gridSize = 100;
     private static Font inputFont = new Font(15);
 
     private int numRows;
@@ -27,22 +25,22 @@ public class Grid extends GridPane {
     public Grid(int rows, int cols) {
         matrices.add(this);
         super.setAlignment(Pos.CENTER);
-        super.setPrefSize(250, 250);
+        super.setPrefSize(300, 300);
 
         numRows = rows;
         numCols = cols;
-        setInputDimensions();
 
         for(int row=0; row<numRows; row++) {
             for(int col=0; col<numCols; col++) {
                 TextField input = new InputField(row, col);
-                input.setPrefSize(inputWidth, inputHeight);
                 input.setAlignment(Pos.CENTER);
                 input.setFont(inputFont);
-                super.add(input, inputWidth*row, inputHeight*col);
+                super.add(input, row, col);
             }
         }
 
+        smallestCountRowsOrColumns = numRows < smallestCountRowsOrColumns ? numRows : smallestCountRowsOrColumns;
+        smallestCountRowsOrColumns = numCols < smallestCountRowsOrColumns ? numCols : smallestCountRowsOrColumns;
     }
 
     public void enableEdits() {
@@ -64,10 +62,12 @@ public class Grid extends GridPane {
     }
 
     public static void resizeInputs() {
+        int inputSize = gridSize / smallestCountRowsOrColumns;
+
         for(Grid matrix: matrices) {
             for(Node input: matrix.getChildren()) {
-                if(input instanceof TextField) {
-                    ((TextField) input).setPrefSize(inputWidth, inputHeight);
+                if(input instanceof InputField) {
+                    ((TextField) input).setPrefSize(inputSize, inputSize);
                 }
             }
         }
@@ -101,10 +101,9 @@ public class Grid extends GridPane {
         for(int row=0; row<numRows; row++) {
             for(int col=0; col<numCols; col++) {
                 TextField input = new InputField(row, col);
-                input.setPrefSize(inputWidth, inputHeight);
                 input.setAlignment(Pos.CENTER);
                 input.setFont(inputFont);
-                super.add(input, inputHeight*col, inputWidth*row);
+                super.add(input, col, row);
             }
         }
 
@@ -116,13 +115,5 @@ public class Grid extends GridPane {
                 inputField.setText(String.valueOf(values[row][col]));
             }
         }
-    }
-
-    private void setInputDimensions() {
-        inputWidth = width/numRows;
-        inputHeight = height/numCols;
-
-        if(inputWidth > inputHeight) inputWidth = inputHeight;
-        else inputHeight = inputWidth;
     }
 }
