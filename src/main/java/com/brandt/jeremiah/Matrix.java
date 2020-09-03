@@ -2,6 +2,7 @@ package com.brandt.jeremiah;
 
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Labeled;
 import javafx.scene.layout.HBox;
@@ -29,7 +30,12 @@ public class Matrix extends VBox {
         dimensionSelectors.getChildren().addAll(rowSelector, colSelector);
 
         grid = new Grid();
-        super.getChildren().addAll(title, dimensionSelectors, grid);
+
+        Button clearButton = new Button("Clear");
+        clearButton.setPrefSize(70, 30);
+        clearButton.setOnMouseClicked(mouseEvent -> grid.clear());
+
+        super.getChildren().addAll(title, dimensionSelectors, grid, clearButton);
     }
 
     protected void resize() {

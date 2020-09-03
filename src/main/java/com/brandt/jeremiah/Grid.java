@@ -61,6 +61,11 @@ public class Grid extends GridPane {
         }
     }
 
+    public void clear() {
+        setValues(new int[numRows][numCols]);
+        resizeInputs();
+    }
+
     public static void resizeInputs() {
         int inputSize = gridSize / smallestCountRowsOrColumns;
 

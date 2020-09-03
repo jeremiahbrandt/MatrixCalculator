@@ -30,7 +30,7 @@ public class Calculator extends HBox {
 
         super.getChildren().addAll(input1, operationSelector, input2, calculationButton, output);
 
-//        insertTestValues();
+        insertTestValues();
         Grid.resizeInputs();
     }
 
@@ -84,7 +84,7 @@ public class Calculator extends HBox {
             }
 
         } else if(operation.equals(Operation.MULTIPLICATION)) {
-            validDimensions = input1Values.length == input2Values[0].length;
+            validDimensions = input1Values[0].length == input2Values.length;
 
             if(validDimensions) {
                 answer = new int[input1Values.length][input2Values[0].length];
@@ -102,14 +102,14 @@ public class Calculator extends HBox {
             } else {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Invalid Dimensions");
-                alert.setContentText("Multiplication requires that the number of rows in Matrix A be equal to the number of columns in Matrix B!");
+                alert.setContentText("Multiplication requires that the number of columns in Matrix A be equal to the number of rows in Matrix B!");
                 alert.show();
             }
         }
 
         if(validDimensions) {
-            input1.getGrid().disableEdits();
-            input2.getGrid().disableEdits();
+//            input1.getGrid().disableEdits();
+//            input2.getGrid().disableEdits();
             output.getGrid().setValues(answer);
             Grid.resizeInputs();
         }
