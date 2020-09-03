@@ -1,52 +1,50 @@
 package com.brandt.jeremiah;
 
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.control.ComboBox;
+import javafx.scene.layout.HBox;
 
-public class Calculator extends BorderPane {
-    Group center;
-    private MatrixGrid input1;
-    private MatrixGrid input2;
-    private MatrixGrid output;
+public class Calculator extends HBox {
+    private static int PADDING = 20;
+
+    private Grid input1;
+    private Grid input2;
+    private Grid output;
 
     public Calculator() {
-        input1 = new MatrixGrid(3, 5);
-        BorderPane.setAlignment(input1, Pos.CENTER);
-        super.setLeft(input1);
+        input1 = new Grid();
 
-        input2 = new MatrixGrid(7, 3);
-        super.setCenter(input2);
+        ComboBox operationSelector = new OperationSelector();
+        super.setAlignment(Pos.CENTER);
 
-        output = new MatrixGrid(3, 3);
+        input2 = new Grid();
+
+        CalculationButton calculationButton = new CalculationButton(this);
+
+        output = new Grid();
         output.disableEdits();
-        super.setRight(output);
-        BorderPane.setAlignment(output, Pos.CENTER);
 
-        MatrixGrid.resizeInputs();
+        Grid.resizeInputs();
 
+        super.getChildren().addAll(input1, operationSelector, input2, calculationButton, output);
 
-        Group buttons = new Buttons(this);
-        BorderPane.setAlignment(buttons, Pos.CENTER);
-        super.setBottom(buttons);
-
-        insertTestValues();
+//        insertTestValues();
     }
 
-    protected void calculate(CalculationType calculationType) {
+    protected void calculate(Operation operation) {
         int[][] input1Values = input1.getValues();
         int[][] input2Values = input2.getValues();
         int[][] answer = new int[0][0];
 
-        if(calculationType.equals(CalculationType.ADDITION)) {
+        if(operation.equals(Operation.ADDITION)) {
             answer = new int[input1Values.length][input1Values[0].length];
             for(int i=0; i<input1Values.length; i++) {
                 for(int j=0; j<input1Values[i].length; j++) {
                     answer[i][j] = input1Values[i][j] + input2Values[i][j];
                 }
             }
-        } else if(calculationType.equals(CalculationType.SUBSTRACTION)) {
+        } else if(operation.equals(Operation.SUBSTRACTION)) {
             answer = new int[input1Values.length][input1Values[0].length];
             for(int i=0; i<input1Values.length; i++) {
                 for(int j=0; j<input1Values[i].length; j++) {
@@ -54,7 +52,7 @@ public class Calculator extends BorderPane {
                 }
             }
 
-        } else if(calculationType.equals(CalculationType.MULTIPLICATION)) {
+        } else if(operation.equals(Operation.MULTIPLICATION)) {
             answer = new int[input1Values.length][input2Values[0].length];
             for(int row=0; row<answer.length; row++) {
                 for(int col=0; col<answer[0].length; col++) {
@@ -67,7 +65,7 @@ public class Calculator extends BorderPane {
                     answer[row][col] = sum;
                 }
             }
-        } else if(calculationType.equals(CalculationType.DIVISION)) {
+        } else if(operation.equals(Operation.DIVISION)) {
             answer = new int[input1Values.length][input2Values[0].length];
         }
 
@@ -78,9 +76,9 @@ public class Calculator extends BorderPane {
 
     protected void clearAllFields() {
         for(Node node: super.getChildren()) {
-            if(node instanceof MatrixGrid) {
-                MatrixGrid matrixGrid = (MatrixGrid) node;
-                matrixGrid.enableEdits();
+            if(node instanceof Grid) {
+                Grid grid = (Grid) node;
+                grid.enableEdits();
             }
         }
     }
