@@ -30,7 +30,7 @@ public class Calculator extends HBox {
 
         super.getChildren().addAll(input1, operationSelector, input2, calculationButton, output);
 
-        insertTestValues();
+//        insertTestValues();
         Grid.resizeInputs();
     }
 

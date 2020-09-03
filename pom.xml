@@ -32,6 +32,7 @@
                 <version>0.0.3</version>
                 <configuration>
                     <mainClass>com.brandt.jeremiah.App</mainClass>
+                    <jlinkZipName>MatrixCalculator</jlinkZipName>
                     <launcher>Launch</launcher>
                 </configuration>
             </plugin>
