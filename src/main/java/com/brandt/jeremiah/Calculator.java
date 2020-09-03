@@ -3,6 +3,7 @@ package com.brandt.jeremiah;
 import com.brandt.jeremiah.Exceptions.UnknownOperationException;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.HBox;
 
 public class Calculator extends HBox {
@@ -43,46 +44,75 @@ public class Calculator extends HBox {
             System.out.println("Defaulting operation to " + operation + "!");
         }
 
+        boolean validDimensions = false;
+
         int[][] input1Values = input1.getGrid().getValues();
         int[][] input2Values = input2.getGrid().getValues();
         int[][] answer = new int[0][0];
 
         if(operation.equals(Operation.ADDITION)) {
             answer = new int[input1Values.length][input1Values[0].length];
-            for(int i=0; i<input1Values.length; i++) {
-                for(int j=0; j<input1Values[i].length; j++) {
-                    answer[i][j] = input1Values[i][j] + input2Values[i][j];
+            validDimensions = input1Values.length == input2Values.length && input1Values[0].length == input2Values[0].length;
+
+            if(validDimensions) {
+                for(int i=0; i<input1Values.length; i++) {
+                    for(int j=0; j<input1Values[i].length; j++) {
+                        answer[i][j] = input1Values[i][j] + input2Values[i][j];
+                    }
                 }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Invalid Dimensions");
+                alert.setContentText("Addition requires that both Matrix A and Matrix B have the same number of rows and the same number of columns!");
+                alert.show();
             }
         } else if(operation.equals(Operation.SUBSTRACTION)) {
-            answer = new int[input1Values.length][input1Values[0].length];
-            for(int i=0; i<input1Values.length; i++) {
-                for(int j=0; j<input1Values[i].length; j++) {
-                    answer[i][j] = input1Values[i][j] - input2Values[i][j];
+            validDimensions = input1Values.length == input2Values.length && input1Values[0].length == input2Values[0].length;
+
+            if(validDimensions) {
+                answer = new int[input1Values.length][input1Values[0].length];
+                for(int i=0; i<input1Values.length; i++) {
+                    for(int j=0; j<input1Values[i].length; j++) {
+                        answer[i][j] = input1Values[i][j] - input2Values[i][j];
+                    }
                 }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Invalid Dimensions");
+                alert.setContentText("Subtraction requires that both Matrix A and Matrix B have the same number of rows and the same number of columns!");
+                alert.show();
             }
 
         } else if(operation.equals(Operation.MULTIPLICATION)) {
-            answer = new int[input1Values.length][input2Values[0].length];
-            for(int row=0; row<answer.length; row++) {
-                for(int col=0; col<answer[0].length; col++) {
-                    int sum = 0;
-                    for(int i=0; i<input1Values[0].length; i++) {
-                        int valFromInput1 = input1Values[row][i];
-                        int valFromInput2 = input2Values[i][col];
-                        sum += valFromInput1 * valFromInput2;
+            validDimensions = input1Values.length == input2Values[0].length;
+
+            if(validDimensions) {
+                answer = new int[input1Values.length][input2Values[0].length];
+                for(int row=0; row<answer.length; row++) {
+                    for(int col=0; col<answer[0].length; col++) {
+                        int sum = 0;
+                        for(int i=0; i<input1Values[0].length; i++) {
+                            int valFromInput1 = input1Values[row][i];
+                            int valFromInput2 = input2Values[i][col];
+                            sum += valFromInput1 * valFromInput2;
+                        }
+                        answer[row][col] = sum;
                     }
-                    answer[row][col] = sum;
                 }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Invalid Dimensions");
+                alert.setContentText("Multiplication requires that the number of rows in Matrix A be equal to the number of columns in Matrix B!");
+                alert.show();
             }
-        } else if(operation.equals(Operation.DIVISION)) {
-            answer = new int[input1Values.length][input2Values[0].length];
         }
 
-        input1.getGrid().disableEdits();
-        input2.getGrid().disableEdits();
-        output.getGrid().setValues(answer);
-        Grid.resizeInputs();
+        if(validDimensions) {
+            input1.getGrid().disableEdits();
+            input2.getGrid().disableEdits();
+            output.getGrid().setValues(answer);
+            Grid.resizeInputs();
+        }
     }
 
     protected void clearAllFields() {
