@@ -5,8 +5,15 @@ A JavaFX application to perform simple operation on matrices.
 - [X] Addition method
 - [X] Subtraction method
 - [X] Multiplication method
-- [ ] Move operation button
-- [ ] Add matrix names
-- [ ] Add method to adjust matrix dimensions
-- [ ] Add method to insert/remove matrices
-- [ ] Inverse method
+
+## Windows Installation
+1. Download "Matrix_Calculator_Windows.zip"
+1. Extract file contents
+1. Run Matrix_Calculator_Windows/bin/Launch.bat
+
+## Linux Installation
+1. Download "Matrix_Calculator_Linux.zip"
+1. Extract file contents
+1. Run Matrix_Calculator_Linux/bin/Launch
+
+
